@@ -100,3 +100,14 @@ Absolute links
 --------------
 Set ``TEMPLATE_EMAIL_BASE_URL`` in ``settings.py`` to the base url of your site
 to have TemplateEmail automatically convert relative links to absolute.
+
+
+Template context processors
+---------------------------
+Set ``TEMPLATE_EMAIL_USE_CONTEXT_PROCESSORS = True`` in ``settings.py`` to have
+TemplateEmail run Django template context processors from
+``TEMPLATE_CONTEXT_PROCESSORS`` to collect the initial context. The ``request``
+parameter will be passed as ``None``. All exceptions will be silenced.
+
+This can be used to pass request-independent context variables (such as that
+come from ``django.core.context_processors.media``) to your email templates.
