@@ -61,10 +61,12 @@ class TemplateEmail(EmailMultiAlternatives):
             html_doc = None
             base_url = getattr(settings, "TEMPLATE_EMAIL_BASE_URL", None)
             if base_url:
-                html_doc = html_doc or lxml.html.fromstring(html)
+                if html_doc is None:
+                    html_doc = lxml.html.fromstring(html)
                 html_doc.make_links_absolute(base_url)
             if getattr(settings, "TEMPLATE_EMAIL_INLINE_CSS", False):
-                html_doc = html_doc or lxml.html.fromstring(html)
+                if html_doc is None:
+                    html_doc = lxml.html.fromstring(html)
                 opts = getattr(
                     settings, "TEMPLATE_EMAIL_INLINE_CSS_OPTIONS", {})
                 html_doc = premailer.Premailer(html_doc, **opts).transform()
